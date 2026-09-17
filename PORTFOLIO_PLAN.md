@@ -26,6 +26,14 @@ Viết tiếng Việt, trình bày chức năng rồi giải thích vai trò c�
 4. Bổ sung tên cá nhân/thương hiệu, kênh liên hệ công khai và repository xuất bản.
 5. Kiểm tra website và liên kết trước khi xuất bản; không chạy thử các sản phẩm được giới thiệu.
 
+## Website phiên bản đầu
+
+Đã xây dựng trang chủ, bộ lọc dự án, ba trang bài viết, mục lục, phần liên hệ GitHub và trang 404. Nội dung Markdown được build thành HTML tĩnh bằng Node.js; không cần cài dependency. Có cấu hình triển khai GitHub Actions trong `.github/workflows/pages.yml`.
+
+Thương hiệu tạm dùng FOTECHV theo repository hiện có. Có thể bổ sung email và đổi tên trong `site.config.json`. Hướng dẫn chạy và xuất bản nằm trong `README.md`.
+
+Đã kiểm tra build, 5 trang HTML, 81 liên kết/tài nguyên/anchor nội bộ; kiểm tra trình duyệt cho bộ lọc, điều hướng bài viết, mục lục và bố cục mobile. Không chạy thử các sản phẩm được giới thiệu.
+
 ## Nguồn nội bộ
 
 - English Platform: `D:/MyProjects/English_Platform/README.md`, `AGENTS.md`, `package.json`.
