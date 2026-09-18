@@ -22,7 +22,8 @@ for (const file of pages) {
   assert.ok(html.includes('name="description"'), `${file}: SEO description`);
   for (const [, link] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     if (/^(https?:|mailto:|data:)/.test(link)) continue;
-    const [relative, fragment] = link.split('#');
+    const [resource, fragment] = link.split('#');
+    const relative = resource.split('?')[0];
     let target = relative ? path.resolve(relative.startsWith('/') ? root : path.dirname(file), '.' + (relative.startsWith('/') ? relative : '/' + relative)) : file;
     if ((await stat(target)).isDirectory()) target = path.join(target, 'index.html');
     await stat(target);

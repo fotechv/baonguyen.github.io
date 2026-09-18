@@ -1,9 +1,11 @@
 import { readFile, writeFile, mkdir, cp } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const out = path.join(root, 'dist');
+const styleVersion = createHash('sha256').update(await readFile(path.join(root, 'assets/style.css'))).digest('hex').slice(0, 12);
 const config = JSON.parse(await readFile(path.join(root, 'site.config.json'), 'utf8'));
 const escape = (s) => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const inline = (s) => escape(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code>$1</code>');
@@ -35,7 +37,7 @@ function contact(prefix) {
 
 function layout({ title, description, body, prefix = './', canonical = '', kind = 'website' }) {
   return `<!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5f0"><title>${escape(title)} | ${escape(config.name)}</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${escape(config.url + '/' + canonical)}"><meta property="og:type" content="${kind}"><meta property="og:title" content="${escape(title)} | ${escape(config.name)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${escape(config.url + '/' + canonical)}"><meta property="og:locale" content="vi_VN"><meta property="og:image" content="${escape(config.url)}/assets/social.svg"><meta name="twitter:card" content="summary"><link rel="icon" href="${prefix}assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="${prefix}assets/style.css"><script src="${prefix}assets/site.js" defer></script></head>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5f0"><title>${escape(title)} | ${escape(config.name)}</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${escape(config.url + '/' + canonical)}"><meta property="og:type" content="${kind}"><meta property="og:title" content="${escape(title)} | ${escape(config.name)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${escape(config.url + '/' + canonical)}"><meta property="og:locale" content="vi_VN"><meta property="og:image" content="${escape(config.url)}/assets/social.svg"><meta name="twitter:card" content="summary"><link rel="icon" href="${prefix}assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="${prefix}assets/style.css?v=${styleVersion}"><script src="${prefix}assets/site.js" defer></script></head>
 <body><a class="skip" href="#main">Đến nội dung chính</a><header class="header wrap"><a class="brand" href="${prefix}" aria-label="${escape(config.name)} — Trang chủ"><span class="brand-icon">f<span>↗</span></span>${escape(config.name)}</a><nav aria-label="Điều hướng chính"><a href="${prefix}#du-an">Dự án</a><a href="${prefix}#cach-tiep-can">Cách tiếp cận</a><a class="nav-contact" href="#lien-he">Kết nối <span>↗</span></a></nav></header>
 <main id="main">${body}${contact(prefix)}</main><footer class="footer wrap"><a class="brand small" href="${prefix}">${escape(config.name)}</a><p>Phần mềm từ ý tưởng đến ứng dụng.</p><a href="${escape(config.github)}" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>© ${new Date().getFullYear()} ${escape(config.name)}</span></footer></body></html>`;
 }
