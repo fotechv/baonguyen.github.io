@@ -1,6 +1,6 @@
 # FOTECHV — Portfolio
 
-Website tĩnh bằng HTML/CSS/JavaScript, với ba bài giới thiệu dự án được tạo từ Markdown. Build bằng Node.js, không cần cài dependency.
+Website tĩnh bằng HTML/CSS/JavaScript, với các bài giới thiệu dự án được tạo từ Markdown. Build bằng Node.js, không cần cài dependency.
 
 ## Xem trên máy
 
